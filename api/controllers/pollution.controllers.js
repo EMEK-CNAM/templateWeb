@@ -1,10 +1,5 @@
-const { v4: uuidv4 } = require("uuid");
-
-
 const db = require("../models");
-const e = require("express");
 const Pollution = db.pollution;
-const Op = db.Sequelize.Op;
 
 exports.get = (req, res) => {
 
@@ -38,18 +33,24 @@ exports.findOne = (req, res) => {
 
 exports.create = (req, res) => {
 	// Validate request
-	if (!req.body.type || !req.body.level) {
+	// `titre` is required by the model
+	if (!req.body.titre) {
 		res.status(400).send({
 			message: "Content can not be empty!"
 		});
 		return;
 	}
 
+	// Map incoming body to model fields
 	const pollution = {
-		id: uuidv4(),
-		type: req.body.type,
-		level: req.body.level,
-		location: req.body.location
+		titre: req.body.titre,
+		lieu: req.body.lieu,
+		date_observation: req.body.date_observation,
+		type_pollution: req.body.type_pollution,
+		description: req.body.description,
+		latitude: req.body.latitude,
+		longitude: req.body.longitude,
+		photo_url: req.body.photo_url
 	};
 
 	Pollution.create(pollution)
