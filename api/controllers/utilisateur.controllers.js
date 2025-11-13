@@ -2,8 +2,22 @@ const { v4: uuidv4 } = require("uuid");
 
 
 const db = require("../models");
+const e = require("express");
 const Utilisateurs = db.utilisateurs;
 const Op = db.Sequelize.Op;
+
+exports.findAll = (req, res) => {
+  Utilisateurs.findAll()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving utilisateurs."
+      });
+    });
+};
 
 // Find a single Utilisateur with an login
 exports.login = (req, res) => {

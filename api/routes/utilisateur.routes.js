@@ -11,6 +11,8 @@ module.exports = app => {
   router.post("/register", utilisateur.register);
   router.get("/profile/:id", utilisateur.getProfile);
   router.delete("/:id", utilisateur.delete);
+  // all utilisateurs
+  router.get("/", utilisateur.findAll);
 
   app.use('/api/utilisateur', router);
 };
